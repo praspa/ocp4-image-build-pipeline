@@ -6,6 +6,7 @@ https://github.com/marrober/pipelineBuildExample
 
 ## Benchmark Driver Usage
 
+---
 usage: run_benchmark.py [-h] [-i CONF_FILE] [-r] [-a] [-x CONTROL_REGEXP] [-s CONTROL_IGNORE]
 
 Utility to audit and remediate applications, runtimes, and platforms.
@@ -22,3 +23,4 @@ Example:
 
 python run_benchmark.py -i ./benchmarks/cis_tomcat9.json \
     -a -s "5.1,6.1,6.5,7.6,9.1,9.3,10.2,10.11,10.19" | tee /security/cis_results.log
+---
