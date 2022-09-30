@@ -11,7 +11,7 @@ spec:
     - name: LOCAL_REGISTRY_URL
       description: URL endpoint of local registry mirror
       type: string
-      default: 'hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/nitsecure'
+      default: 'hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/cissecure'
   resources:
   steps :
     - name: mirror
@@ -22,7 +22,7 @@ spec:
         - $(params.MAX_PER_REGISTRY)
         - '--dest-skip-tls'
         - '--config'
-        - '/imageset-config-nitsecure.yaml'
+        - '/imageset-config-cissecure.yaml'
         - 'docker://$(params.LOCAL_REGISTRY_URL)'
       image: registry.redhat.io/openshift4/oc-mirror-plugin-rhel8:v4.11.0-202208020235.p0.g3c1c80c.assembly.stream
       volumeMounts:
@@ -30,8 +30,8 @@ spec:
           mountPath: /root/.docker/config.json
           subPath: config.json
         - name: imageset-cm
-          mountPath: /imageset-config-nitsecure.yaml
-          subPath: imageset-config-nitsecure.yaml
+          mountPath: /imageset-config-cissecure.yaml
+          subPath: imageset-config-cissecure.yaml
       workingDir: /workspace/source
   volumes:
     - name: quay-secret

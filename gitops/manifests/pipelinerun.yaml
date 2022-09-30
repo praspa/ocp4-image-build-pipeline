@@ -23,11 +23,11 @@ spec:
         name: image-tomcat-internal-registry
   params:
     - name: LOCAL_REGISTRY_URL
-      value: "hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/nitsecure"
+      value: "hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/cissecure"
     - name: CENTRAL_URL
       value: 'central-stackrox.apps.hub01.test.ocp.example.com:443'
     - name: IMAGE_URL_MARIADB
-      value: 'hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/nitsecure/rhel8/mariadb-105:1-73'
+      value: 'hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/cissecure/rhel8/mariadb-105:1-73'
     - name: commit_id
       value: ""
 

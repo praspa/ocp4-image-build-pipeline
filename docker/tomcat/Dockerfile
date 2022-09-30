@@ -1,4 +1,4 @@
-FROM hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/nitsecure/jboss-webserver-5/jws56-openjdk11-openshift-rhel8:5.6.2-7
+FROM hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/cissecure/jboss-webserver-5/jws56-openjdk11-openshift-rhel8:5.6.2-7
 
 # Set proxies if needed
 ENV http_proxy=http://p1proxy.example.com:8080

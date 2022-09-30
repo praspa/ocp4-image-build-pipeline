@@ -11,7 +11,7 @@ spec:
     - name: IMAGE_URL
       description: URL of the image to scan
       type: string
-      default: 'hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/nitsecure/rhel8/mariadb-105:1-73'
+      default: 'hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/cissecure/rhel8/mariadb-105:1-73'
   resources:
   steps :
     - name: mirror
@@ -20,7 +20,7 @@ spec:
         - '/stackrox_scan_image.sh'
         - "$(params.CENTRAL_URL)"
         - "$(params.IMAGE_URL)"
-      image: image-registry.openshift-image-registry.svc:5000/nit/ocp-developer-tools:1.0.0
+      image: image-registry.openshift-image-registry.svc:5000/cis/ocp-developer-tools:1.0.0
       env:
         - name: ACS_PASSWORD
           valueFrom:
