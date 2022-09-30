@@ -1,0 +1,177 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  labels:
+    pipeline.openshift.io/type: kubernetes
+  name: secure-image-pipeline
+spec:
+  resources:
+  - name: source
+    type: git
+  - name: image-httpd-cache
+    type: image
+  - name: image-httpd-internal-registry
+    type: image
+  - name: image-tomcat-cache
+    type: image
+  - name: image-tomcat-internal-registry
+    type: image
+  params:
+  - name: STORAGE_DRIVER
+    type: string
+    default: vfs
+  - name: MAX_PER_REGISTRY
+    type: string
+    default: '12'
+  - name: LOCAL_REGISTRY_URL
+    type: string
+    default: 'hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/nitsecure'
+  - name: CENTRAL_URL
+    type: string
+    default: 'central-stackrox.apps.hub01.test.ocp.example.com:443'
+  - name: IMAGE_URL_MARIADB
+    type: string
+    default: 'hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/nitsecure/rhel8/mariadb-105:1-73'
+  - name: IMAGE_URL_POSTGRESQL
+    type: string
+    default: 'hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/nitsecure/rhel8/postgresql-13:1-72'
+  - name: IMAGE_URL_HTTPD
+    type: string
+    default: 'hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/nitsecure/ubi8/httpd-24:1-209'
+  - name: IMAGE_URL_TOMCAT_OPENJDK11
+    type: string
+    default: 'hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/nitsecure/jboss-webserver-5/jws56-openjdk11-openshift-rhel8:5.6.2-7'
+  - name: commit_id
+    type: string
+  tasks:
+  - name: mirror
+    params:
+      - name: LOCAL_REGISTRY_URL
+        value: $(params.LOCAL_REGISTRY_URL)
+    resources:
+    taskRef:
+      kind: Task
+      name: mirror
+  - name: acs-scan-mariadb
+    params:
+      - name: IMAGE_URL
+        value: $(params.IMAGE_URL_MARIADB)
+      - name: CENTRAL_URL
+        value: $(params.CENTRAL_URL)
+    resources:
+    taskRef:
+      kind: Task
+      name: acs-scan
+    runAfter:
+      - mirror
+  - name: acs-scan-postgresql
+    params:
+      - name: IMAGE_URL
+        value: $(params.IMAGE_URL_POSTGRESQL)
+      - name: CENTRAL_URL
+        value: $(params.CENTRAL_URL)
+    resources:
+    taskRef:
+      kind: Task
+      name: acs-scan
+    runAfter:
+      - mirror
+  - name: acs-scan-httpd
+    params:
+      - name: IMAGE_URL
+        value: $(params.IMAGE_URL_HTTPD)
+      - name: CENTRAL_URL
+        value: $(params.CENTRAL_URL)
+    resources:
+    taskRef:
+      kind: Task
+      name: acs-scan
+    runAfter:
+      - mirror
+  - name: acs-scan-tomcat
+    params:
+      - name: IMAGE_URL
+        value: $(params.IMAGE_URL_TOMCAT_OPENJDK11)
+      - name: CENTRAL_URL
+        value: $(params.CENTRAL_URL)
+    resources:
+    taskRef:
+      kind: Task
+      name: acs-scan
+    runAfter:
+      - mirror
+  # - name: build-httpd-insecure
+  #   params:
+  #     - name: STORAGE_DRIVER
+  #       value: $(params.STORAGE_DRIVER)
+  #     - name: commit_id
+  #       value: $(params.commit_id)
+  #     - name: dockerfile_sub_path
+  #       value: "docker/Dockerfile"
+  #   resources:
+  #     inputs:
+  #     - name: source
+  #       resource: source
+  #     outputs:
+  #     - name: cache-image
+  #       resource: image-httpd-cache
+  #     - name: internal-registry-image
+  #       resource: image-httpd-internal-registry
+  #   taskRef:
+  #     kind: Task
+  #     name: build
+  #   runAfter:
+  #     - mirror
+  - name: build-tomcat-insecure
+    params:
+      - name: STORAGE_DRIVER
+        value: $(params.STORAGE_DRIVER)
+      - name: commit_id
+        value: $(params.commit_id)
+      - name: dockerfile_sub_path
+        value: "docker/tomcat/Dockerfile"
+    resources:
+      inputs:
+      - name: source
+        resource: source
+      outputs:
+      - name: cache-image
+        resource: image-tomcat-cache
+      - name: internal-registry-image
+        resource: image-tomcat-internal-registry
+    taskRef:
+      kind: Task
+      name: build
+    runAfter:
+      - mirror
+  # - name: build-httpd-secure
+  #   params:
+  #     - name: STORAGE_DRIVER
+  #       value: $(params.STORAGE_DRIVER)
+  #     - name: commit_id
+  #       value: $(params.commit_id)
+  #     - name: dockerfile_sub_path
+  #       value: "docker/Dockerfile"
+  #   resources:
+  #     inputs:
+  #     - name: source
+  #       resource: source
+  #     outputs:
+  #     - name: cache-image
+  #       resource: image-httpd-cache
+  #     - name: internal-registry-image
+  #       resource: image-httpd-internal-registry
+  #   taskRef:
+  #     kind: Task
+  #     name: build
+  #   runAfter:
+  #     - acs-scan-httpd
+  finally:
+  - name: clear-buildah-repo-end
+    params:
+      - name: STORAGE_DRIVER
+        value: $(params.STORAGE_DRIVER)
+    taskRef:
+      kind: Task
+      name: clear-buildah-repo
+

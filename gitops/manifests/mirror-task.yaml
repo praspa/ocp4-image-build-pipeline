@@ -1,0 +1,45 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: mirror
+spec:
+  params:
+    - name: MAX_PER_REGISTRY
+      description: Max per registry
+      type: string
+      default: '12'
+    - name: LOCAL_REGISTRY_URL
+      description: URL endpoint of local registry mirror
+      type: string
+      default: 'hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/nitsecure'
+  resources:
+  steps :
+    - name: mirror
+      command:
+        - oc-mirror
+        - '--continue-on-error'
+        - '--max-per-registry'
+        - $(params.MAX_PER_REGISTRY)
+        - '--dest-skip-tls'
+        - '--config'
+        - '/imageset-config-nitsecure.yaml'
+        - 'docker://$(params.LOCAL_REGISTRY_URL)'
+      image: registry.redhat.io/openshift4/oc-mirror-plugin-rhel8:v4.11.0-202208020235.p0.g3c1c80c.assembly.stream
+      volumeMounts:
+        - name: quay-secret
+          mountPath: /root/.docker/config.json
+          subPath: config.json
+        - name: imageset-cm
+          mountPath: /imageset-config-nitsecure.yaml
+          subPath: imageset-config-nitsecure.yaml
+      workingDir: /workspace/source
+  volumes:
+    - name: quay-secret
+      secret:
+        secretName: quay-secret
+    - name: imageset-cm
+      configMap:
+        name: imageset-cm
+    - name: pipeline-cache
+      persistentVolumeClaim:
+        claimName: pipeline-task-cache-pvc

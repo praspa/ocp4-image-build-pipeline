@@ -1,0 +1,11 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: ocp4-image-build-pipeline-poc-source-code
+spec:
+  params:
+  - name: url
+    value: git@gitlab.example.com:JPaaS/ocp4-image-build-pipeline-poc.git
+  - name: revision
+    value: main
+  type: git

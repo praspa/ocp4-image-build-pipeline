@@ -1,0 +1,9 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: image-httpd-internal-registry
+spec:
+  params:
+  - name: url
+    value: image-registry.openshift-image-registry.svc:5000/pwr-pipeline/safr_redhat_ubi8_httpd-24:1-209.nit.0001
+  type: image 

@@ -1,0 +1,33 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: secure-image-pr-
+spec:
+  pipelineRef:
+    name: secure-image-pipeline
+  resources:
+    - name: source
+      resourceRef:
+        name: ocp4-image-build-pipeline-poc-source-code
+    - name: image-httpd-cache
+      resourceRef:
+        name: image-httpd-cache
+    - name: image-httpd-internal-registry
+      resourceRef:
+        name: image-tomcat-internal-registry
+    - name: image-tomcat-cache
+      resourceRef:
+        name: image-tomcat-cache
+    - name: image-tomcat-internal-registry
+      resourceRef:
+        name: image-tomcat-internal-registry
+  params:
+    - name: LOCAL_REGISTRY_URL
+      value: "hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/nitsecure"
+    - name: CENTRAL_URL
+      value: 'central-stackrox.apps.hub01.test.ocp.example.com:443'
+    - name: IMAGE_URL_MARIADB
+      value: 'hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/nitsecure/rhel8/mariadb-105:1-73'
+    - name: commit_id
+      value: ""
+

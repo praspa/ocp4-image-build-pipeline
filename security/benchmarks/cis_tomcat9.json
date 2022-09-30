@@ -1,0 +1,1986 @@
+{
+  "benchmark": {
+    "type": "cis",
+    "upstream_source": "CIS_Apache_Tomcat_9_Benchmark_v1.1.0.pdf",
+    "controls": [
+      {
+        "id": "1.1",
+        "level": "2",
+        "description": "Remove extraneous files and directories",
+        "audits": [
+          {
+            "applicable_checks": [],
+            "cmd": "ls -l $JWS_HOME/webapps/examples",
+            "result": "!0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "ls -l $JWS_HOME/webapps/docs",
+            "result": "!0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "ls -l $JWS_HOME/webapps/ROOT",
+            "result": "!0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "ls -l $JWS_HOME/webapps/host-manager",
+            "result": "!0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "ls -l $JWS_HOME/webapps/manager",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/webapps/examples",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "rm -rf $JWS_HOME/webapps/examples",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/webapps/docs",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "rm -rf $JWS_HOME/webapps/docs",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/webapps/ROOT",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "rm -rf $JWS_HOME/webapps/ROOT",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/webapps/host-manager",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "rm -rf $JWS_HOME/webapps/host-manager",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/webapps/manager",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "rm -rf $JWS_HOME/webapps/manager",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "1.2",
+        "level": "2",
+        "description": "Disable Unused Connectors (Manual)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep \" port=\" $JWS_HOME/conf/server.xml | grep -vi shutdown | grep -vE '8080|8443|8009'",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "2.1",
+        "level": "2",
+        "description": "Alter the Advertised server.info String (Manual)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/lib/catalina.jar",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "cd /tmp && jar xf $JWS_HOME/lib/catalina.jar org/apache/catalina/util/ServerInfo.properties && grep -i tomcat org/apache/catalina/util/ServerInfo.properties",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "echo 'Fixed in Dockerfile build'",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "2.2",
+        "level": "2",
+        "description": "Alter the Advertised server.number String (Manual)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/lib/catalina.jar",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "cd /tmp && jar xf $JWS_HOME/lib/catalina.jar org/apache/catalina/util/ServerInfo.properties && grep -i server.number org/apache/catalina/util/ServerInfo.properties | grep redhat",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "echo 'Fixed in Dockerfile build'",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "2.3",
+        "level": "2",
+        "description": "Alter the Advertised server.built Date (Manual)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/lib/catalina.jar",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "cd /tmp && jar xf $JWS_HOME/lib/catalina.jar org/apache/catalina/util/ServerInfo.properties && grep -i server.built org/apache/catalina/util/ServerInfo.properties | grep UTC",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "echo 'Fixed in Dockerfile build'",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "2.4",
+        "level": "2",
+        "description": "Disable X-Powered-By HTTP Header and Rename the Server Value for all Connectors (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep xpoweredBy=\"true\" $JWS_HOME/conf/server.xml",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "sed -i 's/xpoweredBy=\"true\"/xpoweredBy=\"false\"/g' $JWS_HOME/conf/server.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "2.5",
+        "level": "1",
+        "description": "Disable client facing Stack Traces (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l",
+                "result": "!0",
+                "result_type": "stdout"
+              }
+            ],
+            "cmd": "find $JWS_HOME/webapps/ -name web.xml | xargs -tI {} grep 'java.lang.Throwable' {}",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "2.6",
+        "level": "1",
+        "description": "Turn off TRACE (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep allowTrace=\"true\" $JWS_HOME/conf/server.xml",
+            "result": "!0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "find $JWS_HOME/webapps -name web.xml | wc -l",
+                "result": "!0",
+                "result_type": "stdout"
+              }
+            ],
+            "cmd": "find $JWS_HOME/webapps/ -name web.xml | xargs -tI {} grep \"<http-method>TRACE</http-method>\" {}",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "sed -i 's/allowTrace=\"true\"/allowTrace=\"false\"/g' $JWS_HOME/conf/server.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "2.7",
+        "level": "2",
+        "description": "Ensure Sever Header is Modified To Prevent Information Disclosure (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep ' server=\"Apache\"' $JWS_HOME/conf/server.xml",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "sed -i 's/ server=\"Apache\"/ server=\"Webserver\"/g' $JWS_HOME/conf/server.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "3.1",
+        "level": "1",
+        "description": "Set a nondeterministic Shutdown command value (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep 'shutdown[[:space:]]*=[[:space:]]*\"SHUTDOWN\"' $JWS_HOME/conf/server.xml",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "sed -i 's/ shutdown=\"SHUTDOWN\"/ shutdown=\"ShutItDown\"/g' $JWS_HOME/conf/server.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "3.2",
+        "level": "2",
+        "description": "Disable the Shutdown port (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep '<Server[[:space:]]\\+[^>]*port[[:space:]]*=[[:space:]]*\"-1\"' $JWS_HOME/conf/server.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "sed -i 's/Server port=\"8005\"/Server port=\"-1\"/g' $JWS_HOME/conf/server.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "4.1",
+        "level": "1",
+        "description": "Restrict access to $CATALINA_HOME (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%u:%G\" $JWS_HOME",
+            "result": "185:root",
+            "comment": "Check calls for tomcat_admin:tomcat. Container image is designed for 185:root.",
+            "result_type": "stdout"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%a\" $JWS_HOME",
+            "result": "770",
+            "comment": "Check wants 750 on JWS_HOME, but group needs write on sub directories.",
+            "result_type": "stdout"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "chmod 750 $JWS_HOME",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "chown 185:root $JWS_HOME",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "4.2",
+        "level": "1",
+        "description": "Restrict access to CATALINA_BASE (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -al \"$CATALINA_BASE\"",
+                "comment": "Container image only has one instance of tomcat.",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%u:%G\" \"$CATALINA_BASE\"",
+            "result": "185:root",
+            "comment": "Check calls for tomcat_admin:tomcat. Container image is designed for 185:root.",
+            "result_type": "stdout"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l \"$CATALINA_BASE\"",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%a\" \"$CATALINA_BASE\"",
+            "result": "770",
+            "comment": "Check wants 750 on CATALINA_BASE, but group needs write on sub directories.",
+            "result_type": "stdout"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "chmod 750 \"$CATALINA_BASE\"",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "chown 185:root \"$CATALINA_BASE\"",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "4.3",
+        "level": "1",
+        "description": "Restrict access to Tomcat configuration directory (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%u:%G\" $JWS_HOME/conf",
+            "result": "185:root",
+            "comment": "Check calls for tomcat_admin:tomcat. Container image is designed for 185:root.",
+            "result_type": "stdout"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%a\" $JWS_HOME/conf",
+            "result": "770",
+            "comment": "Check wants 750 on JWS_HOME/conf, but group needs write on sub directories.",
+            "result_type": "stdout"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "chmod 750 $JWS_HOME/conf",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "chown 185:root $JWS_HOME/conf",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "4.4",
+        "level": "1",
+        "description": "Restrict access to Tomcat logs directory (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/logs",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%u:%G\" $JWS_HOME/logs",
+            "result": "185:root",
+            "comment": "Check calls for tomcat_admin:tomcat. Container image is designed for 185:root.",
+            "result_type": "stdout"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/logs",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%a\" $JWS_HOME/logs",
+            "result": "770",
+            "comment": "Check wants 750 on JWS_HOME/logs, but group needs write on sub directories.",
+            "result_type": "stdout"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "chmod 750 $JWS_HOME/logs",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "chown 185:root $JWS_HOME/logs",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "4.5",
+        "level": "1",
+        "description": "Restrict access to Tomcat temp directory (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/temp",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%u:%G\" $JWS_HOME/temp",
+            "result": "185:root",
+            "comment": "Check calls for tomcat_admin:tomcat. Container image is designed for 185:root.",
+            "result_type": "stdout"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/temp",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%a\" $JWS_HOME/temp",
+            "result": "770",
+            "comment": "Check wants 750 on JWS_HOME/temp, but group needs write on sub directories.",
+            "result_type": "stdout"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "chmod 750 $JWS_HOME/temp",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "chown 185:root $JWS_HOME/temp",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "4.6",
+        "level": "1",
+        "description": "Restrict access to Tomcat binaries directory (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/bin",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%u:%G\" $JWS_HOME/bin",
+            "result": "185:root",
+            "comment": "Check calls for tomcat_admin:tomcat. Container image is designed for 185:root.",
+            "result_type": "stdout"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/bin",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%a\" $JWS_HOME/bin",
+            "result": "770",
+            "comment": "Check wants 750 on JWS_HOME/bin, but group needs write on sub directories.",
+            "result_type": "stdout"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "chmod 750 $JWS_HOME/bin",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "chown 185:root $JWS_HOME/bin",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "4.7",
+        "level": "1",
+        "description": "Restrict access to Tomcat web application directory (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/webapps",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%u:%G\" $JWS_HOME/webapps",
+            "result": "185:root",
+            "comment": "Check calls for tomcat_admin:tomcat. Container image is designed for 185:root.",
+            "result_type": "stdout"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/webapps",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%a\" /deployments",
+            "result": "770",
+            "comment": "The webapps is a symlink to /deployments. Also, Check wants 750 on JWS_HOME/webapps, but group needs write on sub directories.",
+            "result_type": "stdout"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "chmod 750 $JWS_HOME/webapps",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "chown 185:root $JWS_HOME/webapps",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "4.8",
+        "level": "1",
+        "description": "Restrict access to Tomcat catalina.properties (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/catalina.properties",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%u:%G\" $JWS_HOME/conf/catalina.properties",
+            "result": "185:root",
+            "comment": "Check calls for tomcat_admin:tomcat. Container image is designed for 185:root.",
+            "result_type": "stdout"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/catalina.properties",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%a\" $JWS_HOME/conf/catalina.properties",
+            "result": "660",
+            "comment": "Changing check from 600 to 660 for dynamic uid design. Check wants 600 on JWS_HOME/conf/catalina.properties, but guessing root group needs read/write based on container design.",
+            "result_type": "stdout"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "chmod 660 $JWS_HOME/conf/catalina.properties",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "chown 185:root $JWS_HOME/conf/catalina.properties",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "4.9",
+        "level": "1",
+        "description": "Restrict access to Tomcat catalina.policy (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/catalina.policy",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%u:%G\" $JWS_HOME/conf/catalina.policy",
+            "result": "185:root",
+            "comment": "Check calls for tomcat_admin:tomcat. Container image is designed for 185:root.",
+            "result_type": "stdout"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/catalina.policy",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%a\" $JWS_HOME/conf/catalina.policy",
+            "result": "660",
+            "comment": "Changing check from 600 to 660 for dynamic uid design. Check wants 600 on JWS_HOME/conf/catalina.policy, but guessing root group needs read/write based on container design.",
+            "result_type": "stdout"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "chmod 660 $JWS_HOME/conf/catalina.policy",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "chown 185:root $JWS_HOME/conf/catalina.policy",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "4.10",
+        "level": "1",
+        "description": "Restrict access to Tomcat context.xml (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/context.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%U:%G\" $JWS_HOME/conf/context.xml",
+            "result": "jboss:root",
+            "comment": "Check wants tomcat admin as owner, container performs dynamic uid user chown on file. Check calls for tomcat_admin:tomcat. Container image is designed for 185:root.",
+            "result_type": "stdout"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/context.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%a\" $JWS_HOME/conf/context.xml",
+            "result": "660",
+            "comment": "Changing check from 600 to 660 for dynamic uid design. Check wants 600 on JWS_HOME/conf/context.xml, but guessing root group needs read/write based on container design.",
+            "result_type": "stdout"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "chmod 660 $JWS_HOME/conf/context.xml",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "chown 185:root $JWS_HOME/conf/context.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "4.11",
+        "level": "1",
+        "description": "Restrict access to Tomcat logging.properties (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/logging.properties",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%u:%G\" $JWS_HOME/conf/logging.properties",
+            "result": "185:root",
+            "comment": "Check calls for tomcat_admin:tomcat. Container image is designed for 185:root.",
+            "result_type": "stdout"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/logging.properties",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%a\" $JWS_HOME/conf/logging.properties",
+            "result": "640",
+            "comment": "Changing check from 600 to 640 for dynamic uid design. Check wants 600 on JWS_HOME/conf/logging.properties, but guessing root group needs read/write based on container design.",
+            "result_type": "stdout"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "chmod 640 $JWS_HOME/conf/logging.properties",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "chown 185:root $JWS_HOME/conf/logging.properties",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "4.12",
+        "level": "1",
+        "description": "Restrict access to Tomcat server.xml (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%U:%G\" $JWS_HOME/conf/server.xml",
+            "result": "jboss:root",
+            "comment": "S2i scripts sets the ownership to dyanmic uid. Check calls for tomcat_admin:tomcat. Container image is designed for 185:root.",
+            "result_type": "stdout"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%a\" $JWS_HOME/conf/server.xml",
+            "result": "660",
+            "comment": "Changing check from 600 to 660 for dynamic uid design and s2i design. Check wants 600 on JWS_HOME/conf/server.xml, but guessing root group needs read/write based on container design.",
+            "result_type": "stdout"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "chmod 660 $JWS_HOME/conf/server.xml",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "chown jboss:root $JWS_HOME/conf/server.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "4.13",
+        "level": "1",
+        "description": "Restrict access to Tomcat tomcat-users.xml (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/tomcat-users.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%u:%G\" $JWS_HOME/conf/tomcat-users.xml",
+            "result": "185:root",
+            "comment": "Check calls for tomcat_admin:tomcat. Container image is designed for 185:root.",
+            "result_type": "stdout"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/tomcat-users.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%a\" $JWS_HOME/conf/tomcat-users.xml",
+            "result": "660",
+            "comment": "Changing check from 600 to 660 for dynamic uid design. Check wants 600 on JWS_HOME/conf/tomcat-users.xml, but guessing root group needs read/write based on container design.",
+            "result_type": "stdout"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "chmod 660 $JWS_HOME/conf/tomcat-users.xml",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "chown 185:root $JWS_HOME/conf/tomcat-users.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "4.14",
+        "level": "1",
+        "description": "Restrict access to Tomcat web.xml (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/web.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%u:%G\" $JWS_HOME/conf/web.xml",
+            "result": "185:root",
+            "comment": "Check calls for tomcat_admin:tomcat. Container image is designed for 185:root.",
+            "result_type": "stdout"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/web.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%a\" $JWS_HOME/conf/web.xml",
+            "result": "660",
+            "comment": "Changing check from 400 to 660 for dynamic uid design. Check wants 400 on JWS_HOME/conf/web.xml, but guessing root group needs read/write based on container design.",
+            "result_type": "stdout"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "chmod 660 $JWS_HOME/conf/web.xml",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "chown 185:root $JWS_HOME/conf/web.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "4.15",
+        "level": "1",
+        "description": "Restrict access to Tomcat jaspic-providers.xml (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/jaspic-providers.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%u:%G\" $JWS_HOME/conf/jaspic-providers.xml",
+            "result": "185:root",
+            "comment": "Check calls for tomcat_admin:tomcat. Container image is designed for 185:root.",
+            "result_type": "stdout"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/jaspic-providers.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "stat -c \"%a\" $JWS_HOME/conf/jaspic-providers.xml",
+            "result": "660",
+            "comment": "Changing check from 600 to 660 for dynamic uid design. Check wants 600 on JWS_HOME/conf/jaspic-providers.xml, but guessing root group needs read/write based on container design.",
+            "result_type": "stdout"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "chmod 660 $JWS_HOME/conf/jaspic-providers.xml",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "chown 185:root $JWS_HOME/conf/jaspic-providers.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "5.1",
+        "level": "2",
+        "description": "Use secure Realms (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep \"Realm className\" $JWS_HOME/conf/server.xml | grep MemoryRealm ",
+            "result": "!0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep \"Realm className\" $JWS_HOME/conf/server.xml | grep JDBCRealm ",
+            "result": "!0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep \"Realm className\" $JWS_HOME/conf/server.xml | grep UserDatabaseRealm ",
+            "result": "!0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep \"Realm className\" $JWS_HOME/conf/server.xml | grep JAASRealm ",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "grep \"Realm className\" $JWS_HOME/conf/server.xml | grep UserDatabaseRealm",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "sed -i '/Realm className=\"org.apache.catalina.realm.UserDatabaseRealm\"/d' $JWS_HOME/conf/server.xml && sed -i '/resourceName=\"UserDatabase\"/d' $JWS_HOME/conf/server.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "5.2",
+        "level": "2",
+        "description": "Use LockOut Realms (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep LockOutRealm $JWS_HOME/conf/server.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "6.1",
+        "level": "2",
+        "description": "Setup Client-cert Authentication (Automated)",
+        "comment": "Orgs Site policy does not require mutual auth TLS for all apps.",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep 'clientAuth=\"true\"' $JWS_HOME/conf/server.xml",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep 'certificateVerification=\"required\"' $JWS_HOME/conf/server.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "6.2",
+        "level": "1",
+        "description": "Ensure SSLEnabled is set to True for Sensitive Connectors (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep -A4 'port=\"8443\"' $JWS_HOME/conf/server.xml | grep 'SSLEnabled=\"true\"'",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "6.3",
+        "level": "1",
+        "description": "Ensure scheme is set accurately (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep -A4 'port=\"8443\"' $JWS_HOME/conf/server.xml | grep 'scheme=\"https\"'",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "6.4",
+        "level": "1",
+        "description": "Ensure secure is set to true only for SSL-enabled Connectors (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep -A4 'port=\"8443\"' $JWS_HOME/conf/server.xml | grep 'secure=\"true\"'",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "6.5",
+        "level": "1",
+        "description": "Ensure 'sslProtocol' is Configured Correctly for Secure Connectors (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep -A4 'port=\"8443\"' $JWS_HOME/conf/server.xml | grep 'sslProtocol=\"TLSv1.3+TLSv1.2\"\\|SSLProtocol=\"TLSv1.3+TLSv1.2\"'",
+            "comment": "sslProtocl for Nio and SSLProtocol for APR provider.",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "sed -i 's/sslProtocol=\".*\"/sslProtocol=\"TLSv1.2+TLSv1.3\"/g' $JWS_HOME/conf/server.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "7.1",
+        "level": "1",
+        "description": "Application specific logging (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l",
+                "result": "!0",
+                "result_type": "stdout"
+              }
+            ],
+            "cmd": "find $JWS_HOME/webapps -name logging.properties | wc -l",
+            "result": "!0",
+            "result_type": "stdout"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "7.2",
+        "level": "1",
+        "description": "Specify file handler in logging.properties files (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l",
+                "result": "!0",
+                "result_type": "stdout"
+              }
+            ],
+            "cmd": "find $JWS_HOME/webapps -name logging.properties | xargs -tI {} grep handlers {}",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/logging.properties",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep handlers $JWS_HOME/conf/logging.properties",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "7.3",
+        "level": "1",
+        "description": "Ensure className is set correctly in context.xml (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l",
+                "result": "!0",
+                "result_type": "stdout"
+              }
+            ],
+            "cmd": "find $JWS_HOME/webapps -name context.xml | xargs -tI {} grep org.apache.catalina.valves.AccessLogValve {}",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "7.4",
+        "level": "1",
+        "description": "Ensure directory in context.xml is a secure location (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l",
+                "result": "!0",
+                "result_type": "stdout"
+              }
+            ],
+            "cmd": "find $JWS_HOME/webapps -name context.xml | xargs -tI {} grep 'directory=' {}",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "7.5",
+        "level": "1",
+        "description": "Ensure pattern in context.xml is correct (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l",
+                "result": "!0",
+                "result_type": "stdout"
+              }
+            ],
+            "cmd": "find $JWS_HOME/webapps -name context.xml | xargs -tI {} grep 'pattern=' {}",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "7.6",
+        "level": "1",
+        "description": "Ensure directory in logging.properties is a secure location (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "grep 'FileHandler\\|AsyncFileHandler' $JWS_HOME/conf/logging.properties",
+                "comment": "Container is designed to log to standard out and aggregate logs elsewhere.",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep 'directory=' $JWS_HOME/conf/logging.properties",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "8.1",
+        "level": "1",
+        "description": "Restrict runtime access to sensitive packages (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/catalina.properties",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep 'package.access=sun.,org.apache.catalina.,org.apache.coyote.,org.apache.jasper.,org.apache.tomcat.' $JWS_HOME/conf/catalina.properties",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "sed -i 's/package.access=.*/package.access=sun.,org.apache.catalina.,org.apache.coyote.,org.apache.jasper.,org.apache.tomcat./g $JWS_HOME/conf/catalina.properties",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "9.1",
+        "level": "1",
+        "description": "Starting Tomcat with Security Manager (Manual)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/bin/catalina.sh",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep '-security' $JWS_HOME/bin/launch.sh",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "echo todo",
+            "comment": "sed over launch.sh to add -security. But then developers need to define a catalina.policy.",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "9.2",
+        "level": "2",
+        "description": "Disabling auto deployment of applications (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep 'autoDeploy=\"false\"' $JWS_HOME/conf/server.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "sed -i 's/autoDeploy=\"true\"/autoDeploy=\"false\"' $JWS_HOME/conf/server.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "9.3",
+        "level": "2",
+        "description": "Disable deploy on startup of applications (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep 'deployOnStartup=\"false\"' $JWS_HOME/conf/server.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "echo todo",
+            "todo-cmd": "sed -i 's/deployOnStartup=\"true\"/DeployOnStartup=\"false\"' $JWS_HOME/conf/server.xml",
+            "comment": "s2i tomcat designed to put war archive in webapps directory",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+      {
+        "id": "10.1",
+        "level": "1",
+        "description": "Ensure Web content directory is on a separate partition from the Tomcat system files (Manual)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "echo 'not applicable containerized environment.",
+                "result": "!0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "echo 'not applicable'",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.2",
+        "level": "1",
+        "description": "Restrict access to the web administration application (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep RemoteAddrValve $JWS_HOME/conf/server.xml | grep '127'",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.3",
+        "level": "2",
+        "description": "Restrict manager application (Manual)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/Catalina/localhost/manager.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep RemoteAddrValve $JWS_HOME/conf/Catalina/localhost/manager.xml | grep '127'",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.4",
+        "level": "2",
+        "description": "Force SSL when accessing the manager application (Manual)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/webapps/manager",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep transport-guarantee $JWS_HOME/webapps/manager/WEB-INF/web.xml | grep CONFIDENTIAL",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.5",
+        "level": "2",
+        "description": "Rename the manager application (Manual)",
+        "comment": "Unsure if containerized tomcat even has the manager",
+        "audits": [
+          {
+            "applicable_checks": [],
+            "cmd": "ls -l $JWS_HOME/conf/Catalina/localhost/manager.xml",
+            "result": "!0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "ls -l $JWS_HOME/webapps/host-manager/manager.xml",
+            "result": "!0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "ls -l $JWS_HOME/webapps/manager",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.6",
+        "level": "2",
+        "description": "Enable strict servlet Compliance (Manual)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/bin/launch/catalina.sh",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep 'org.apache.catalina.STRICT_SERVLET_COMPLIANCE=true' $JWS_HOME/bin/launch/catalina.sh",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.7",
+        "level": "1",
+        "description": "Turn off session facade recycling (Manual)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/bin/launch/catalina.sh",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep 'org.apache.catalina.connector.RECYCLE_FACADES=true' $JWS_HOME/bin/launch/catalina.sh",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.8",
+        "level": "2",
+        "description": "Do not allow additional path delimiters (Manual)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/bin/launch/catalina.sh",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep 'org.apache.catalina.connector.CoyoteAdapter.ALLOW_BACKSLASH=false' $JWS_HOME/bin/launch/catalina.sh",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/bin/launch/catalina.sh",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep 'org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=false' $JWS_HOME/bin/launch/catalina.sh",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+
+        ]
+      },
+      {
+        "id": "10.9",
+        "level": "2",
+        "description": "Configure connectionTimeout (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep -A3 ' <Connector port=' $JWS_HOME/conf/server.xml | grep 'connectionTimeout'",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.10",
+        "level": "2",
+        "description": "Configure maxHttpHeaderSize (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep -A3 ' <Connector port=' $JWS_HOME/conf/server.xml | grep 'maxHttpHeaderSize' | grep '8192'",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.11",
+        "level": "2",
+        "description": "Force SSL for all applications (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/web.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep transport-guarantee $JWS_HOME/conf/web.xml | grep CONFIDENTIAL",
+            "comment": "OCP Environment some apps are HTTP only, or TLS EDGE Termination is used to fulfil requirement.",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.12",
+        "level": "1",
+        "description": "Do not allow symbolic linking (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/context.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep 'allowLinking=\"true\"' $JWS_HOME/conf/context.xml",
+            "result": "!0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l",
+                "result": "!0",
+                "result_type": "stdout"
+              }
+            ],
+            "cmd": "find $JWS_HOME/webapps/ -name context.xml | xargs -tI {} grep 'allowLinking=\"true\"' {}",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.13",
+        "level": "1",
+        "description": "Do not run applications as privileged (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/context.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep 'privileged=\"true\"' $JWS_HOME/conf/context.xml",
+            "result": "!0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l",
+                "result": "!0",
+                "result_type": "stdout"
+              }
+            ],
+            "cmd": "find $JWS_HOME/webapps/ -name context.xml | xargs -tI {} grep 'privileged=\"true\"' {}",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.14",
+        "level": "1",
+        "description": "Do not allow cross context requests (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/context.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep 'crossContext=\"true\"' $JWS_HOME/conf/context.xml",
+            "result": "!0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l",
+                "result": "!0",
+                "result_type": "stdout"
+              }
+            ],
+            "cmd": "find $JWS_HOME/webapps/ -name context.xml | xargs -tI {} grep 'crossContext=\"true\"' {}",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.15",
+        "level": "1",
+        "description": "Do not resolve hosts on logging valves (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep 'enableLookups=\"true\"' $JWS_HOME/conf/server.xml",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.16",
+        "level": "1",
+        "description": "Enable memory leak listener (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep -E '^.*<Listen' $JWS_HOME/conf/server.xml | grep 'org.apache.catalina.core.JreMemoryLeakPreventionListener'",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.17",
+        "level": "1",
+        "description": "Setting Security Lifecycle Listener (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/server.xml",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep -E '^.*<Listen' $JWS_HOME/conf/server.xml | grep 'org.apache.catalina.security.SecurityListener'",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.18",
+        "level": "1",
+        "description": "Use the logEffectiveWebXml and metadata-complete settings for deploying applications in production (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l",
+                "result": "!0",
+                "result_type": "stdout"
+              }
+            ],
+            "cmd": "find $JWS_HOME/webapps/ -name web.xml | xargs -tI {} grep 'metadata-complete=\"true\"' {}",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l",
+                "result": "!0",
+                "result_type": "stdout"
+              }
+            ],
+            "cmd": "find $JWS_HOME/webapps/ -name context.xml | xargs -tI {} grep 'logEffectiveWebXml=\"true\"' {}",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      },
+      {
+        "id": "10.19",
+        "level": "1",
+        "description": "Ensure Manager Application Passwords are Encrypted (Manual)",
+        "comment": "Manager not enabled in containerized tomcat.",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/webapps/manager",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep -i '<login-config>[.\n]*<auth-method>DIGEST</auth-method>[.\n]*<realm-name>UserDatabase</realm-name>[.\n]*</login-config>' $JWS_HOME/webapps/manager/WEB-INF/web.xml",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": []
+      }
+    ]
+  }
+}

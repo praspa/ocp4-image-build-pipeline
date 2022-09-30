@@ -1,0 +1,9 @@
+apiVersion: tekton.dev/v1alpha1
+kind: PipelineResource
+metadata:
+  name: image-tomcat-internal-registry
+spec:
+  params:
+  - name: url
+    value: image-registry.openshift-image-registry.svc:5000/pwr-pipeline/safr_redhat_jboss-webserver-5_jws56-openjdk11-openshift-rhel8:5.6.2-7.nit0001
+  type: image 

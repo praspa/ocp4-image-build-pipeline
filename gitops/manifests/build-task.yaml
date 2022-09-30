@@ -1,0 +1,79 @@
+apiVersion: tekton.dev/v1alpha1
+kind: Task
+metadata:
+  name: build
+spec:
+  params:
+    - name: PATH_CONTEXT
+      description: Build path context
+      type: string
+      default: .
+    - name: TLSVERIFY
+      description: Verify the TLS on the registry endpoint
+      type: string
+      default: 'false'
+    - name: STORAGE_DRIVER
+      description: The Buildah storage STORAGE_DRIVER
+      type: string
+    - name: commit_id
+      type: string
+    - name: dockerfile_sub_path
+      type: string
+  resources:
+    inputs:
+      - name: source
+        type: git
+    outputs:
+      - name: cache-image
+        type: image
+      - name: internal-registry-image
+        type: image
+  steps:
+    - name: build
+      command:
+        - buildah
+        - bud
+        - '--tls-verify=$(params.TLSVERIFY)'
+        - '--storage-driver=$(params.STORAGE_DRIVER)'
+        - '--authfile'
+        - '/etc/secret-volume/config.json'
+        - '--label'
+        - 'gitlab.commit.id=$(params.commit_id)'
+        - '--layers'
+        - '-f'
+        - /workspace/source/$(params.dockerfile_sub_path)
+        - '-t'
+        - $(resources.outputs.cache-image.url)
+        - .
+      image: registry.redhat.io/rhel8/buildah
+      resources: {}
+      volumeMounts:
+        - name: pipeline-cache
+          mountPath: /var/lib/containers
+        - name: quay-secret
+          mountPath: /etc/secret-volume
+          readOnly: true
+      workingDir: /workspace/source
+    - name: push-internal-registry-image-to-openshift
+      command:
+        - buildah
+        - push
+        - '--storage-driver=$(params.STORAGE_DRIVER)'
+        - '--tls-verify=$(params.TLSVERIFY)'
+        - $(resources.outputs.cache-image.url)
+        - 'docker://$(resources.outputs.internal-registry-image.url)'
+      image: registry.redhat.io/rhel8/buildah
+      resources: {}
+      volumeMounts:
+        - name: pipeline-cache
+          mountPath: /var/lib/containers
+        - name: quay-secret
+          mountPath: /etc/secret-volume
+          readOnly: true
+  volumes:
+    - name: quay-secret
+      secret:
+        secretName: quay-secret       
+    - name: pipeline-cache
+      persistentVolumeClaim:
+        claimName: pipeline-task-cache-pvc
