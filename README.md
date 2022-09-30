@@ -1,10 +1,33 @@
-# ocp4-image-build-pipeline-poc
+# ocp4-image-build-pipeline
 
 proof of concept secure image build pipeline
 
 https://github.com/marrober/pipelineBuildExample
 
-## Benchmark Driver Usage
+## CIS Benchmark Control Checklists
+
+```
+$ ls -al ./security/benchmarks/
+total 64
+drwx------. 1 praspant praspant    32 Sep 30 13:35 .
+drwx------. 1 praspant praspant    52 Sep 30 13:35 ..
+-rw-rw-r--. 1 praspant praspant 62906 Sep 30 13:35 cis_tomcat9.json
+```
+
+## Benchmark Driver Script and Usage
+
+Driver Script Location:
+
+```
+$ ls -al ./security/
+total 12
+drwx------. 1 praspant praspant    52 Sep 30 13:35 .
+drwxrwxr-x. 1 praspant praspant   144 Sep 30 13:56 ..
+drwx------. 1 praspant praspant    32 Sep 30 13:35 benchmarks
+-rw-rw-r--. 1 praspant praspant 11972 Sep 30 13:35 run_benchmark.py
+```
+
+Driver script usage:
 
 ```
 usage: run_benchmark.py [-h] [-i CONF_FILE] [-r] [-a] [-x CONTROL_REGEXP] [-s CONTROL_IGNORE]
