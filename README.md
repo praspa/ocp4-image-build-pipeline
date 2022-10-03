@@ -85,13 +85,13 @@ python run_benchmark.py -i ./benchmarks/cis_tomcat9.json \
 ```
 
 * Each control often has one to many audit (-a) checks
-** Each audit has one to many applicability checks
-*** All applicability checks must pass for the audit to be performed
-* If the remediation flag is set (-r), the remediations are executed after the matching audit check fails
+   * Each audit has one to many applicability checks
+      * All applicability checks must pass for the audit to be performed
+      * If the remediation flag is set (-r), the remediations are executed after the matching audit check fails
 
 * If a control is known to be not applicable to the environment, skip the control with comma separated list of control numbers
-** -s "1.1,1.2,..."
+   * -s "1.1,1.2,..."
 
 * For testing, to run a single or subset of controls use -x
-** For example, to run all of the checks under 1.1.x , use -x "1.1"
-** Or to run a specific check only,  -x "1.2.2.1"
+   * For example, to run all of the checks under 1.1.x , use -x "1.1"
+   * Or to run a specific check only,  -x "1.2.2.1"
