@@ -14,6 +14,40 @@ drwx------. 1 praspant praspant    52 Sep 30 13:35 ..
 -rw-rw-r--. 1 praspant praspant 62906 Sep 30 13:35 cis_tomcat9.json
 ```
 
+## Sample Control Check (Audit/Remediation) 
+
+```
+...
+      {
+        "id": "8.1",
+        "level": "1",
+        "description": "Restrict runtime access to sensitive packages (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $JWS_HOME/conf/catalina.properties",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "grep 'package.access=sun.,org.apache.catalina.,org.apache.coyote.,org.apache.jasper.,org.apache.tomcat.' $JWS_HOME/conf/catalina.properties",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "sed -i 's/package.access=.*/package.access=sun.,org.apache.catalina.,org.apache.coyote.,org.apache.jasper.,org.apache.tomcat./g $JWS_HOME/conf/catalina.properties",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },
+...
+```
+
 ## Benchmark Driver Script and Usage
 
 Driver Script Location:
