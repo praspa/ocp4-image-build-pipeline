@@ -1,9 +1,4 @@
-FROM hub-registry-quay-quay-enterprise.apps.hub01.test.ocp.example.com/ocpv4-stage/cissecure/jboss-webserver-5/jws56-openjdk11-openshift-rhel8:5.6.2-7
-
-# Set proxies if needed
-ENV http_proxy=http://p1proxy.example.com:8080
-ENV https_proxy=http://p1proxy.example.com:8080
-ENV no_proxy=localhost,127.0.0.1,.example.com,.example.pvt
+FROM registry.redhat.io/jboss-webserver-5/jws56-openjdk11-openshift-rhel8:5.6.2-7
 
 # CIS Tomcat9 - 2.5
 ENV JWS_SERVER_NAME=Webserver
@@ -18,7 +13,7 @@ USER root
 RUN yum -y install python3 dos2unix nmap-ncat bind-utils diffutils less curl zip unzip && yum clean all && rm -fR /var/cache/yum 
 
 ADD security /security
-RUN chown -R 1001:1001 /security
+RUN chown -R 1001:1001 /security && chmod -R 755 /security/benchmarks
 
 # CIS Tomcat9 1.1
 RUN rm -rf $JWS_HOME/webapps/ROOT && rm -f $JWS_HOME/webapps/ROOT.war

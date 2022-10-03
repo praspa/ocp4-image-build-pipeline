@@ -1,0 +1,1169 @@
+===================================================================================
+= Benchmark Type: cis
+= Benchmark Source: CIS_Apache_Tomcat_9_Benchmark_v1.1.0.pdf
+===================================================================================
+INFO: System audit enabled.
+===================================================================================
+= Control ID: 1.1
+= Control  Level: 2
+= Description: Remove extraneous files and directories
+===================================================================================
+Performing Audit ...
+Audit cmd: ls -l $JWS_HOME/webapps/examples
+ls: cannot access '/opt/jws-5.6/tomcat/webapps/examples': No such file or directory
+Audit Check RC: 2
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Audit cmd: ls -l $JWS_HOME/webapps/docs
+ls: cannot access '/opt/jws-5.6/tomcat/webapps/docs': No such file or directory
+Audit Check RC: 2
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Audit cmd: ls -l $JWS_HOME/webapps/ROOT
+ls: cannot access '/opt/jws-5.6/tomcat/webapps/ROOT': No such file or directory
+Audit Check RC: 2
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Audit cmd: ls -l $JWS_HOME/webapps/host-manager
+ls: cannot access '/opt/jws-5.6/tomcat/webapps/host-manager': No such file or directory
+Audit Check RC: 2
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Audit cmd: ls -l $JWS_HOME/webapps/manager
+ls: cannot access '/opt/jws-5.6/tomcat/webapps/manager': No such file or directory
+Audit Check RC: 2
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Control: 1.1 - Audit PASS
+===================================================================================
+= Control ID: 1.2
+= Control  Level: 2
+= Description: Disable Unused Connectors (Manual)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep " port=" $JWS_HOME/conf/server.xml | grep -vi shutdown | grep -vE '8080|8443|8009'
+Audit Check RC: 1
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Control: 1.2 - Audit PASS
+===================================================================================
+= Control ID: 2.1
+= Control  Level: 2
+= Description: Alter the Advertised server.info String (Manual)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/lib/catalina.jar
+Applicability Check RC: 0
+Applicability Check Output:<-rw-r--r--. 1 185 root 1744588 Oct  3 17:19 /opt/jws-5.6/tomcat/lib/catalina.jar>
+Applicability Check expected Result:<0>
+Audit cmd: cd /tmp && jar xf $JWS_HOME/lib/catalina.jar org/apache/catalina/util/ServerInfo.properties && grep -i tomcat org/apache/catalina/util/ServerInfo.properties
+java.io.FileNotFoundException: org/apache/catalina/util/ServerInfo.properties (Permission denied)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:187)
+	at jdk.jartool/sun.tools.jar.Main.copy(Main.java:1275)
+	at jdk.jartool/sun.tools.jar.Main.extractFile(Main.java:1453)
+	at jdk.jartool/sun.tools.jar.Main.extract(Main.java:1399)
+	at jdk.jartool/sun.tools.jar.Main.run(Main.java:403)
+	at jdk.jartool/sun.tools.jar.Main.main(Main.java:1680)
+Audit Check RC: 1
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Control: 2.1 - Audit PASS
+===================================================================================
+= Control ID: 2.2
+= Control  Level: 2
+= Description: Alter the Advertised server.number String (Manual)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/lib/catalina.jar
+Applicability Check RC: 0
+Applicability Check Output:<-rw-r--r--. 1 185 root 1744588 Oct  3 17:19 /opt/jws-5.6/tomcat/lib/catalina.jar>
+Applicability Check expected Result:<0>
+Audit cmd: cd /tmp && jar xf $JWS_HOME/lib/catalina.jar org/apache/catalina/util/ServerInfo.properties && grep -i server.number org/apache/catalina/util/ServerInfo.properties | grep redhat
+java.io.FileNotFoundException: org/apache/catalina/util/ServerInfo.properties (Permission denied)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:187)
+	at jdk.jartool/sun.tools.jar.Main.copy(Main.java:1275)
+	at jdk.jartool/sun.tools.jar.Main.extractFile(Main.java:1453)
+	at jdk.jartool/sun.tools.jar.Main.extract(Main.java:1399)
+	at jdk.jartool/sun.tools.jar.Main.run(Main.java:403)
+	at jdk.jartool/sun.tools.jar.Main.main(Main.java:1680)
+Audit Check RC: 1
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Control: 2.2 - Audit PASS
+===================================================================================
+= Control ID: 2.3
+= Control  Level: 2
+= Description: Alter the Advertised server.built Date (Manual)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/lib/catalina.jar
+Applicability Check RC: 0
+Applicability Check Output:<-rw-r--r--. 1 185 root 1744588 Oct  3 17:19 /opt/jws-5.6/tomcat/lib/catalina.jar>
+Applicability Check expected Result:<0>
+Audit cmd: cd /tmp && jar xf $JWS_HOME/lib/catalina.jar org/apache/catalina/util/ServerInfo.properties && grep -i server.built org/apache/catalina/util/ServerInfo.properties | grep UTC
+java.io.FileNotFoundException: org/apache/catalina/util/ServerInfo.properties (Permission denied)
+	at java.base/java.io.FileOutputStream.open0(Native Method)
+	at java.base/java.io.FileOutputStream.open(FileOutputStream.java:298)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:237)
+	at java.base/java.io.FileOutputStream.<init>(FileOutputStream.java:187)
+	at jdk.jartool/sun.tools.jar.Main.copy(Main.java:1275)
+	at jdk.jartool/sun.tools.jar.Main.extractFile(Main.java:1453)
+	at jdk.jartool/sun.tools.jar.Main.extract(Main.java:1399)
+	at jdk.jartool/sun.tools.jar.Main.run(Main.java:403)
+	at jdk.jartool/sun.tools.jar.Main.main(Main.java:1680)
+Audit Check RC: 1
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Control: 2.3 - Audit PASS
+===================================================================================
+= Control ID: 2.4
+= Control  Level: 2
+= Description: Disable X-Powered-By HTTP Header and Rename the Server Value for all Connectors (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep xpoweredBy="true" $JWS_HOME/conf/server.xml
+Audit Check RC: 1
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Control: 2.4 - Audit PASS
+===================================================================================
+= Control ID: 2.5
+= Control  Level: 1
+= Description: Disable client facing Stack Traces (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l
+Applicability Check RC: 0
+Applicability Check Output:<0>
+Applicability Check expected Result:<!0>
+Warning: Applicability Check Failed for STDOUT.
+Audit Applicability Check Failed. Audit: 1 Control: 2.5 is not applicable to this environment.
+Control: 2.5 - Audit Not Applicable
+===================================================================================
+= Control ID: 2.6
+= Control  Level: 1
+= Description: Turn off TRACE (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep allowTrace="true" $JWS_HOME/conf/server.xml
+Audit Check RC: 1
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Applicability Check CMD: find $JWS_HOME/webapps -name web.xml | wc -l
+Applicability Check RC: 0
+Applicability Check Output:<0>
+Applicability Check expected Result:<!0>
+Warning: Applicability Check Failed for STDOUT.
+Audit Applicability Check Failed. Audit: 2 Control: 2.6 is not applicable to this environment.
+Control: 2.6 - Audit PASS
+===================================================================================
+= Control ID: 2.7
+= Control  Level: 2
+= Description: Ensure Sever Header is Modified To Prevent Information Disclosure (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep ' server="Apache"' $JWS_HOME/conf/server.xml
+Audit Check RC: 1
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Control: 2.7 - Audit PASS
+===================================================================================
+= Control ID: 3.1
+= Control  Level: 1
+= Description: Set a nondeterministic Shutdown command value (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep 'shutdown[[:space:]]*=[[:space:]]*"SHUTDOWN"' $JWS_HOME/conf/server.xml
+Audit Check RC: 1
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Control: 3.1 - Audit PASS
+===================================================================================
+= Control ID: 3.2
+= Control  Level: 2
+= Description: Disable the Shutdown port (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep '<Server[[:space:]]\+[^>]*port[[:space:]]*=[[:space:]]*"-1"' $JWS_HOME/conf/server.xml
+Audit Check RC: 0
+Audit Check Output:<<Server port="-1" shutdown="ShutItDown">>
+Audit Check expected Result:<0>
+Control: 3.2 - Audit PASS
+===================================================================================
+= Control ID: 4.1
+= Control  Level: 1
+= Description: Restrict access to $CATALINA_HOME (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME
+Applicability Check RC: 0
+Applicability Check Output:<total 0
+drwxrwx---. 1 185 root 20 Jun 16 13:52 bin
+drwxrwx---. 1 185 root 59 Oct  3 17:20 conf
+drwxrwxr-x. 1 185 root 26 Jun 16 13:52 lib
+drwxrwx---. 1 185 root  6 Oct 22  2021 logs
+drwxrwxr-x. 1 185 root 72 Jun 16 13:27 selinux
+drwxrwxr-x. 1 185 root 71 Jun 16 13:27 services
+drwxrwx---. 1 185 root  6 Oct 22  2021 temp
+lrwxrwxrwx. 1 185 root 12 Jun 16 13:52 webapps -> /deployments>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%u:%G" $JWS_HOME
+Audit Check RC: 0
+Audit Check Output:<185:root>
+Audit Check expected Result:<185:root>
+Applicability Check CMD: ls -l $JWS_HOME
+Applicability Check RC: 0
+Applicability Check Output:<total 0
+drwxrwx---. 1 185 root 20 Jun 16 13:52 bin
+drwxrwx---. 1 185 root 59 Oct  3 17:20 conf
+drwxrwxr-x. 1 185 root 26 Jun 16 13:52 lib
+drwxrwx---. 1 185 root  6 Oct 22  2021 logs
+drwxrwxr-x. 1 185 root 72 Jun 16 13:27 selinux
+drwxrwxr-x. 1 185 root 71 Jun 16 13:27 services
+drwxrwx---. 1 185 root  6 Oct 22  2021 temp
+lrwxrwxrwx. 1 185 root 12 Jun 16 13:52 webapps -> /deployments>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%a" $JWS_HOME
+Audit Check RC: 0
+Audit Check Output:<770>
+Audit Check expected Result:<770>
+Control: 4.1 - Audit PASS
+===================================================================================
+= Control ID: 4.2
+= Control  Level: 1
+= Description: Restrict access to CATALINA_BASE (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -al "$CATALINA_BASE"
+ls: cannot access '': No such file or directory
+Applicability Check RC: 2
+Applicability Check Output:<>
+Applicability Check expected Result:<0>
+Warning: Applicability Check Failed for RC.
+Audit Applicability Check Failed. Audit: 1 Control: 4.2 is not applicable to this environment.
+Applicability Check CMD: ls -l "$CATALINA_BASE"
+ls: cannot access '': No such file or directory
+Applicability Check RC: 2
+Applicability Check Output:<>
+Applicability Check expected Result:<0>
+Warning: Applicability Check Failed for RC.
+Audit Applicability Check Failed. Audit: 2 Control: 4.2 is not applicable to this environment.
+Control: 4.2 - Audit Not Applicable
+===================================================================================
+= Control ID: 4.3
+= Control  Level: 1
+= Description: Restrict access to Tomcat configuration directory (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf
+Applicability Check RC: 0
+Applicability Check Output:<total 228
+drwxr-x---. 3 jboss root     23 Oct  3 17:20 Catalina
+-rw-rw----. 1   185 root  13316 Nov  3  2021 catalina.policy
+-rw-rw----. 1   185 root   7262 Oct 22  2021 catalina.properties
+-rw-rw----. 1 jboss root   1665 Oct  3 17:20 context.xml
+-rw-rw----. 1   185 root   1149 Oct 22  2021 jaspic-providers.xml
+-rw-rw-r--. 1   185 root   2313 Oct 22  2021 jaspic-providers.xsd
+-rw-r-----. 1   185 root    216 Jun 16 13:50 logging.properties
+-rw-rw----. 1 jboss root   6703 Oct  3 17:20 server.xml
+-rw-rw----. 1   185 root   2756 Oct 22  2021 tomcat-users.xml
+-rw-rw-r--. 1   185 root   2558 Oct 22  2021 tomcat-users.xsd
+-rw-rw----. 1   185 root 172359 Oct 22  2021 web.xml>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%u:%G" $JWS_HOME/conf
+Audit Check RC: 0
+Audit Check Output:<185:root>
+Audit Check expected Result:<185:root>
+Applicability Check CMD: ls -l $JWS_HOME/conf
+Applicability Check RC: 0
+Applicability Check Output:<total 228
+drwxr-x---. 3 jboss root     23 Oct  3 17:20 Catalina
+-rw-rw----. 1   185 root  13316 Nov  3  2021 catalina.policy
+-rw-rw----. 1   185 root   7262 Oct 22  2021 catalina.properties
+-rw-rw----. 1 jboss root   1665 Oct  3 17:20 context.xml
+-rw-rw----. 1   185 root   1149 Oct 22  2021 jaspic-providers.xml
+-rw-rw-r--. 1   185 root   2313 Oct 22  2021 jaspic-providers.xsd
+-rw-r-----. 1   185 root    216 Jun 16 13:50 logging.properties
+-rw-rw----. 1 jboss root   6703 Oct  3 17:20 server.xml
+-rw-rw----. 1   185 root   2756 Oct 22  2021 tomcat-users.xml
+-rw-rw-r--. 1   185 root   2558 Oct 22  2021 tomcat-users.xsd
+-rw-rw----. 1   185 root 172359 Oct 22  2021 web.xml>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%a" $JWS_HOME/conf
+Audit Check RC: 0
+Audit Check Output:<770>
+Audit Check expected Result:<770>
+Control: 4.3 - Audit PASS
+===================================================================================
+= Control ID: 4.4
+= Control  Level: 1
+= Description: Restrict access to Tomcat logs directory (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/logs
+Applicability Check RC: 0
+Applicability Check Output:<total 0>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%u:%G" $JWS_HOME/logs
+Audit Check RC: 0
+Audit Check Output:<185:root>
+Audit Check expected Result:<185:root>
+Applicability Check CMD: ls -l $JWS_HOME/logs
+Applicability Check RC: 0
+Applicability Check Output:<total 0>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%a" $JWS_HOME/logs
+Audit Check RC: 0
+Audit Check Output:<770>
+Audit Check expected Result:<770>
+Control: 4.4 - Audit PASS
+===================================================================================
+= Control ID: 4.5
+= Control  Level: 1
+= Description: Restrict access to Tomcat temp directory (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/temp
+Applicability Check RC: 0
+Applicability Check Output:<total 0>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%u:%G" $JWS_HOME/temp
+Audit Check RC: 0
+Audit Check Output:<185:root>
+Audit Check expected Result:<185:root>
+Applicability Check CMD: ls -l $JWS_HOME/temp
+Applicability Check RC: 0
+Applicability Check Output:<total 0>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%a" $JWS_HOME/temp
+Audit Check RC: 0
+Audit Check Output:<770>
+Audit Check expected Result:<770>
+Control: 4.5 - Audit PASS
+===================================================================================
+= Control ID: 4.6
+= Control  Level: 1
+= Description: Restrict access to Tomcat binaries directory (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/bin
+Applicability Check RC: 0
+Applicability Check Output:<total 232
+-rw-rw-r--. 1 185 root 34707 Oct 22  2021 bootstrap.jar
+-rw-rw-r--. 1 185 root  1664 Oct 22  2021 catalina-tasks.xml
+-rw-rw-r--. 1 185 root 16451 Oct 22  2021 catalina.bat
+-rwxrwxr-x. 1 185 root 25342 Jun 16 13:27 catalina.sh
+-rw-rw-r--. 1 185 root  2065 Oct 22  2021 ciphers.bat
+-rwxrwxr-x. 1 185 root  1997 Oct 22  2021 ciphers.sh
+-rw-rw-r--. 1 185 root  1982 Oct 22  2021 configtest.bat
+-rwxrwxr-x. 1 185 root  1922 Oct 22  2021 configtest.sh
+-rw-rw-r--. 1 185 root  2033 Oct 22  2021 digest.bat
+-rwxrwxr-x. 1 185 root  1965 Oct 22  2021 digest.sh
+drwxrwxr-x. 1 185 root    22 Oct  3 17:19 launch
+-rwxrwxr-x. 1 185 root   932 Jun 16 13:52 launch.sh
+-rw-rw-r--. 1 185 root  3492 Oct 22  2021 makebase.bat
+-rwxrwxr-x. 1 185 root  3382 Oct 22  2021 makebase.sh
+-rw-rw-r--. 1 185 root  3366 Oct 22  2021 setclasspath.bat
+-rwxrwxr-x. 1 185 root  3708 Oct 22  2021 setclasspath.sh
+-rw-rw-r--. 1 185 root   140 Apr 13 13:45 setenv.sh
+-rw-rw-r--. 1 185 root  1962 Oct 22  2021 shutdown.bat
+-rwxrwxr-x. 1 185 root  1902 Oct 22  2021 shutdown.sh
+-rw-rw-r--. 1 185 root  1964 Oct 22  2021 startup.bat
+-rwxrwxr-x. 1 185 root  1904 Oct 22  2021 startup.sh
+-rw-rw-r--. 1 185 root 46633 Oct 22  2021 tomcat-juli.jar
+-rw-rw-r--. 1 185 root  1705 Nov  3  2021 tomcat-vault.bat
+-rwxrwxr-x. 1 185 root  2484 Nov  3  2021 tomcat-vault.sh
+-rw-rw-r--. 1 185 root  4464 Oct 22  2021 tool-wrapper.bat
+-rwxrwxr-x. 1 185 root  5540 Oct 22  2021 tool-wrapper.sh
+-rw-rw-r--. 1 185 root  1968 Oct 22  2021 version.bat
+-rwxrwxr-x. 1 185 root  1908 Oct 22  2021 version.sh>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%u:%G" $JWS_HOME/bin
+Audit Check RC: 0
+Audit Check Output:<185:root>
+Audit Check expected Result:<185:root>
+Applicability Check CMD: ls -l $JWS_HOME/bin
+Applicability Check RC: 0
+Applicability Check Output:<total 232
+-rw-rw-r--. 1 185 root 34707 Oct 22  2021 bootstrap.jar
+-rw-rw-r--. 1 185 root  1664 Oct 22  2021 catalina-tasks.xml
+-rw-rw-r--. 1 185 root 16451 Oct 22  2021 catalina.bat
+-rwxrwxr-x. 1 185 root 25342 Jun 16 13:27 catalina.sh
+-rw-rw-r--. 1 185 root  2065 Oct 22  2021 ciphers.bat
+-rwxrwxr-x. 1 185 root  1997 Oct 22  2021 ciphers.sh
+-rw-rw-r--. 1 185 root  1982 Oct 22  2021 configtest.bat
+-rwxrwxr-x. 1 185 root  1922 Oct 22  2021 configtest.sh
+-rw-rw-r--. 1 185 root  2033 Oct 22  2021 digest.bat
+-rwxrwxr-x. 1 185 root  1965 Oct 22  2021 digest.sh
+drwxrwxr-x. 1 185 root    22 Oct  3 17:19 launch
+-rwxrwxr-x. 1 185 root   932 Jun 16 13:52 launch.sh
+-rw-rw-r--. 1 185 root  3492 Oct 22  2021 makebase.bat
+-rwxrwxr-x. 1 185 root  3382 Oct 22  2021 makebase.sh
+-rw-rw-r--. 1 185 root  3366 Oct 22  2021 setclasspath.bat
+-rwxrwxr-x. 1 185 root  3708 Oct 22  2021 setclasspath.sh
+-rw-rw-r--. 1 185 root   140 Apr 13 13:45 setenv.sh
+-rw-rw-r--. 1 185 root  1962 Oct 22  2021 shutdown.bat
+-rwxrwxr-x. 1 185 root  1902 Oct 22  2021 shutdown.sh
+-rw-rw-r--. 1 185 root  1964 Oct 22  2021 startup.bat
+-rwxrwxr-x. 1 185 root  1904 Oct 22  2021 startup.sh
+-rw-rw-r--. 1 185 root 46633 Oct 22  2021 tomcat-juli.jar
+-rw-rw-r--. 1 185 root  1705 Nov  3  2021 tomcat-vault.bat
+-rwxrwxr-x. 1 185 root  2484 Nov  3  2021 tomcat-vault.sh
+-rw-rw-r--. 1 185 root  4464 Oct 22  2021 tool-wrapper.bat
+-rwxrwxr-x. 1 185 root  5540 Oct 22  2021 tool-wrapper.sh
+-rw-rw-r--. 1 185 root  1968 Oct 22  2021 version.bat
+-rwxrwxr-x. 1 185 root  1908 Oct 22  2021 version.sh>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%a" $JWS_HOME/bin
+Audit Check RC: 0
+Audit Check Output:<770>
+Audit Check expected Result:<770>
+Control: 4.6 - Audit PASS
+===================================================================================
+= Control ID: 4.7
+= Control  Level: 1
+= Description: Restrict access to Tomcat web application directory (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/webapps
+Applicability Check RC: 0
+Applicability Check Output:<lrwxrwxrwx. 1 185 root 12 Jun 16 13:52 /opt/jws-5.6/tomcat/webapps -> /deployments>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%u:%G" $JWS_HOME/webapps
+Audit Check RC: 0
+Audit Check Output:<185:root>
+Audit Check expected Result:<185:root>
+Applicability Check CMD: ls -l $JWS_HOME/webapps
+Applicability Check RC: 0
+Applicability Check Output:<lrwxrwxrwx. 1 185 root 12 Jun 16 13:52 /opt/jws-5.6/tomcat/webapps -> /deployments>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%a" /deployments
+Audit Check RC: 0
+Audit Check Output:<770>
+Audit Check expected Result:<770>
+Control: 4.7 - Audit PASS
+===================================================================================
+= Control ID: 4.8
+= Control  Level: 1
+= Description: Restrict access to Tomcat catalina.properties (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/catalina.properties
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 185 root 7262 Oct 22  2021 /opt/jws-5.6/tomcat/conf/catalina.properties>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%u:%G" $JWS_HOME/conf/catalina.properties
+Audit Check RC: 0
+Audit Check Output:<185:root>
+Audit Check expected Result:<185:root>
+Applicability Check CMD: ls -l $JWS_HOME/conf/catalina.properties
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 185 root 7262 Oct 22  2021 /opt/jws-5.6/tomcat/conf/catalina.properties>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%a" $JWS_HOME/conf/catalina.properties
+Audit Check RC: 0
+Audit Check Output:<660>
+Audit Check expected Result:<660>
+Control: 4.8 - Audit PASS
+===================================================================================
+= Control ID: 4.9
+= Control  Level: 1
+= Description: Restrict access to Tomcat catalina.policy (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/catalina.policy
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 185 root 13316 Nov  3  2021 /opt/jws-5.6/tomcat/conf/catalina.policy>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%u:%G" $JWS_HOME/conf/catalina.policy
+Audit Check RC: 0
+Audit Check Output:<185:root>
+Audit Check expected Result:<185:root>
+Applicability Check CMD: ls -l $JWS_HOME/conf/catalina.policy
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 185 root 13316 Nov  3  2021 /opt/jws-5.6/tomcat/conf/catalina.policy>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%a" $JWS_HOME/conf/catalina.policy
+Audit Check RC: 0
+Audit Check Output:<660>
+Audit Check expected Result:<660>
+Control: 4.9 - Audit PASS
+===================================================================================
+= Control ID: 4.10
+= Control  Level: 1
+= Description: Restrict access to Tomcat context.xml (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/context.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 1665 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/context.xml>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%U:%G" $JWS_HOME/conf/context.xml
+Audit Check RC: 0
+Audit Check Output:<jboss:root>
+Audit Check expected Result:<jboss:root>
+Applicability Check CMD: ls -l $JWS_HOME/conf/context.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 1665 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/context.xml>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%a" $JWS_HOME/conf/context.xml
+Audit Check RC: 0
+Audit Check Output:<660>
+Audit Check expected Result:<660>
+Control: 4.10 - Audit PASS
+===================================================================================
+= Control ID: 4.11
+= Control  Level: 1
+= Description: Restrict access to Tomcat logging.properties (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/logging.properties
+Applicability Check RC: 0
+Applicability Check Output:<-rw-r-----. 1 185 root 216 Jun 16 13:50 /opt/jws-5.6/tomcat/conf/logging.properties>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%u:%G" $JWS_HOME/conf/logging.properties
+Audit Check RC: 0
+Audit Check Output:<185:root>
+Audit Check expected Result:<185:root>
+Applicability Check CMD: ls -l $JWS_HOME/conf/logging.properties
+Applicability Check RC: 0
+Applicability Check Output:<-rw-r-----. 1 185 root 216 Jun 16 13:50 /opt/jws-5.6/tomcat/conf/logging.properties>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%a" $JWS_HOME/conf/logging.properties
+Audit Check RC: 0
+Audit Check Output:<640>
+Audit Check expected Result:<640>
+Control: 4.11 - Audit PASS
+===================================================================================
+= Control ID: 4.12
+= Control  Level: 1
+= Description: Restrict access to Tomcat server.xml (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%U:%G" $JWS_HOME/conf/server.xml
+Audit Check RC: 0
+Audit Check Output:<jboss:root>
+Audit Check expected Result:<jboss:root>
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%a" $JWS_HOME/conf/server.xml
+Audit Check RC: 0
+Audit Check Output:<660>
+Audit Check expected Result:<660>
+Control: 4.12 - Audit PASS
+===================================================================================
+= Control ID: 4.13
+= Control  Level: 1
+= Description: Restrict access to Tomcat tomcat-users.xml (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/tomcat-users.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 185 root 2756 Oct 22  2021 /opt/jws-5.6/tomcat/conf/tomcat-users.xml>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%u:%G" $JWS_HOME/conf/tomcat-users.xml
+Audit Check RC: 0
+Audit Check Output:<185:root>
+Audit Check expected Result:<185:root>
+Applicability Check CMD: ls -l $JWS_HOME/conf/tomcat-users.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 185 root 2756 Oct 22  2021 /opt/jws-5.6/tomcat/conf/tomcat-users.xml>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%a" $JWS_HOME/conf/tomcat-users.xml
+Audit Check RC: 0
+Audit Check Output:<660>
+Audit Check expected Result:<660>
+Control: 4.13 - Audit PASS
+===================================================================================
+= Control ID: 4.14
+= Control  Level: 1
+= Description: Restrict access to Tomcat web.xml (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/web.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 185 root 172359 Oct 22  2021 /opt/jws-5.6/tomcat/conf/web.xml>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%u:%G" $JWS_HOME/conf/web.xml
+Audit Check RC: 0
+Audit Check Output:<185:root>
+Audit Check expected Result:<185:root>
+Applicability Check CMD: ls -l $JWS_HOME/conf/web.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 185 root 172359 Oct 22  2021 /opt/jws-5.6/tomcat/conf/web.xml>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%a" $JWS_HOME/conf/web.xml
+Audit Check RC: 0
+Audit Check Output:<660>
+Audit Check expected Result:<660>
+Control: 4.14 - Audit PASS
+===================================================================================
+= Control ID: 4.15
+= Control  Level: 1
+= Description: Restrict access to Tomcat jaspic-providers.xml (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/jaspic-providers.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 185 root 1149 Oct 22  2021 /opt/jws-5.6/tomcat/conf/jaspic-providers.xml>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%u:%G" $JWS_HOME/conf/jaspic-providers.xml
+Audit Check RC: 0
+Audit Check Output:<185:root>
+Audit Check expected Result:<185:root>
+Applicability Check CMD: ls -l $JWS_HOME/conf/jaspic-providers.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 185 root 1149 Oct 22  2021 /opt/jws-5.6/tomcat/conf/jaspic-providers.xml>
+Applicability Check expected Result:<0>
+Audit cmd: stat -c "%a" $JWS_HOME/conf/jaspic-providers.xml
+Audit Check RC: 0
+Audit Check Output:<660>
+Audit Check expected Result:<660>
+Control: 4.15 - Audit PASS
+Skipping control: 5.1 in ignore list.
+===================================================================================
+= Control ID: 5.2
+= Control  Level: 2
+= Description: Use LockOut Realms (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep LockOutRealm $JWS_HOME/conf/server.xml
+Audit Check RC: 0
+Audit Check Output:<      <!-- Use the LockOutRealm to prevent attempts to guess user passwords
+      <Realm className="org.apache.catalina.realm.LockOutRealm">>
+Audit Check expected Result:<0>
+Control: 5.2 - Audit PASS
+Skipping control: 6.1 in ignore list.
+===================================================================================
+= Control ID: 6.2
+= Control  Level: 1
+= Description: Ensure SSLEnabled is set to True for Sensitive Connectors (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep -A4 'port="8443"' $JWS_HOME/conf/server.xml | grep 'SSLEnabled="true"'
+Audit Check RC: 0
+Audit Check Output:<               maxThreads="150" SSLEnabled="true" scheme="https" secure="true">
+Audit Check expected Result:<0>
+Control: 6.2 - Audit PASS
+===================================================================================
+= Control ID: 6.3
+= Control  Level: 1
+= Description: Ensure scheme is set accurately (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep -A4 'port="8443"' $JWS_HOME/conf/server.xml | grep 'scheme="https"'
+Audit Check RC: 0
+Audit Check Output:<               maxThreads="150" SSLEnabled="true" scheme="https" secure="true">
+Audit Check expected Result:<0>
+Control: 6.3 - Audit PASS
+===================================================================================
+= Control ID: 6.4
+= Control  Level: 1
+= Description: Ensure secure is set to true only for SSL-enabled Connectors (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep -A4 'port="8443"' $JWS_HOME/conf/server.xml | grep 'secure="true"'
+Audit Check RC: 0
+Audit Check Output:<               maxThreads="150" SSLEnabled="true" scheme="https" secure="true">
+Audit Check expected Result:<0>
+Control: 6.4 - Audit PASS
+Skipping control: 6.5 in ignore list.
+===================================================================================
+= Control ID: 7.1
+= Control  Level: 1
+= Description: Application specific logging (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l
+Applicability Check RC: 0
+Applicability Check Output:<0>
+Applicability Check expected Result:<!0>
+Warning: Applicability Check Failed for STDOUT.
+Audit Applicability Check Failed. Audit: 1 Control: 7.1 is not applicable to this environment.
+Control: 7.1 - Audit Not Applicable
+===================================================================================
+= Control ID: 7.2
+= Control  Level: 1
+= Description: Specify file handler in logging.properties files (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l
+Applicability Check RC: 0
+Applicability Check Output:<0>
+Applicability Check expected Result:<!0>
+Warning: Applicability Check Failed for STDOUT.
+Audit Applicability Check Failed. Audit: 1 Control: 7.2 is not applicable to this environment.
+Applicability Check CMD: ls -l $JWS_HOME/conf/logging.properties
+Applicability Check RC: 0
+Applicability Check Output:<-rw-r-----. 1 185 root 216 Jun 16 13:50 /opt/jws-5.6/tomcat/conf/logging.properties>
+Applicability Check expected Result:<0>
+Audit cmd: grep handlers $JWS_HOME/conf/logging.properties
+Audit Check RC: 0
+Audit Check Output:<handlers = java.util.logging.ConsoleHandler
+.handlers = java.util.logging.ConsoleHandler>
+Audit Check expected Result:<0>
+Control: 7.2 - Audit PASS
+===================================================================================
+= Control ID: 7.3
+= Control  Level: 1
+= Description: Ensure className is set correctly in context.xml (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l
+Applicability Check RC: 0
+Applicability Check Output:<0>
+Applicability Check expected Result:<!0>
+Warning: Applicability Check Failed for STDOUT.
+Audit Applicability Check Failed. Audit: 1 Control: 7.3 is not applicable to this environment.
+Control: 7.3 - Audit Not Applicable
+===================================================================================
+= Control ID: 7.4
+= Control  Level: 1
+= Description: Ensure directory in context.xml is a secure location (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l
+Applicability Check RC: 0
+Applicability Check Output:<0>
+Applicability Check expected Result:<!0>
+Warning: Applicability Check Failed for STDOUT.
+Audit Applicability Check Failed. Audit: 1 Control: 7.4 is not applicable to this environment.
+Control: 7.4 - Audit Not Applicable
+===================================================================================
+= Control ID: 7.5
+= Control  Level: 1
+= Description: Ensure pattern in context.xml is correct (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l
+Applicability Check RC: 0
+Applicability Check Output:<0>
+Applicability Check expected Result:<!0>
+Warning: Applicability Check Failed for STDOUT.
+Audit Applicability Check Failed. Audit: 1 Control: 7.5 is not applicable to this environment.
+Control: 7.5 - Audit Not Applicable
+Skipping control: 7.6 in ignore list.
+===================================================================================
+= Control ID: 8.1
+= Control  Level: 1
+= Description: Restrict runtime access to sensitive packages (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/catalina.properties
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 185 root 7262 Oct 22  2021 /opt/jws-5.6/tomcat/conf/catalina.properties>
+Applicability Check expected Result:<0>
+Audit cmd: grep 'package.access=sun.,org.apache.catalina.,org.apache.coyote.,org.apache.jasper.,org.apache.tomcat.' $JWS_HOME/conf/catalina.properties
+Audit Check RC: 0
+Audit Check Output:<package.access=sun.,org.apache.catalina.,org.apache.coyote.,org.apache.jasper.,org.apache.tomcat.>
+Audit Check expected Result:<0>
+Control: 8.1 - Audit PASS
+Skipping control: 9.1 in ignore list.
+===================================================================================
+= Control ID: 9.2
+= Control  Level: 2
+= Description: Disabling auto deployment of applications (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep 'autoDeploy="false"' $JWS_HOME/conf/server.xml
+Audit Check RC: 0
+Audit Check Output:<            unpackWARs="true" autoDeploy="false" deployOnStartup="true">>
+Audit Check expected Result:<0>
+Control: 9.2 - Audit PASS
+Skipping control: 9.3 in ignore list.
+===================================================================================
+= Control ID: 10.1
+= Control  Level: 1
+= Description: Ensure Web content directory is on a separate partition from the Tomcat system files (Manual)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: echo 'not applicable containerized environment.
+/bin/sh: -c: line 0: unexpected EOF while looking for matching `''
+/bin/sh: -c: line 1: syntax error: unexpected end of file
+Applicability Check RC: 1
+Applicability Check Output:<>
+Applicability Check expected Result:<!0>
+Audit cmd: echo 'not applicable'
+Audit Check RC: 0
+Audit Check Output:<not applicable>
+Audit Check expected Result:<0>
+Control: 10.1 - Audit PASS
+Skipping control: 10.2 in ignore list.
+===================================================================================
+= Control ID: 10.3
+= Control  Level: 2
+= Description: Restrict manager application (Manual)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/Catalina/localhost/manager.xml
+ls: cannot access '/opt/jws-5.6/tomcat/conf/Catalina/localhost/manager.xml': No such file or directory
+Applicability Check RC: 2
+Applicability Check Output:<>
+Applicability Check expected Result:<0>
+Warning: Applicability Check Failed for RC.
+Audit Applicability Check Failed. Audit: 1 Control: 10.3 is not applicable to this environment.
+Control: 10.3 - Audit Not Applicable
+===================================================================================
+= Control ID: 10.4
+= Control  Level: 2
+= Description: Force SSL when accessing the manager application (Manual)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/webapps/manager
+ls: cannot access '/opt/jws-5.6/tomcat/webapps/manager': No such file or directory
+Applicability Check RC: 2
+Applicability Check Output:<>
+Applicability Check expected Result:<0>
+Warning: Applicability Check Failed for RC.
+Audit Applicability Check Failed. Audit: 1 Control: 10.4 is not applicable to this environment.
+Control: 10.4 - Audit Not Applicable
+===================================================================================
+= Control ID: 10.5
+= Control  Level: 2
+= Description: Rename the manager application (Manual)
+===================================================================================
+Performing Audit ...
+Audit cmd: ls -l $JWS_HOME/conf/Catalina/localhost/manager.xml
+ls: cannot access '/opt/jws-5.6/tomcat/conf/Catalina/localhost/manager.xml': No such file or directory
+Audit Check RC: 2
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Audit cmd: ls -l $JWS_HOME/webapps/host-manager/manager.xml
+ls: cannot access '/opt/jws-5.6/tomcat/webapps/host-manager/manager.xml': No such file or directory
+Audit Check RC: 2
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Audit cmd: ls -l $JWS_HOME/webapps/manager
+ls: cannot access '/opt/jws-5.6/tomcat/webapps/manager': No such file or directory
+Audit Check RC: 2
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Control: 10.5 - Audit PASS
+===================================================================================
+= Control ID: 10.6
+= Control  Level: 2
+= Description: Enable strict servlet Compliance (Manual)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/bin/launch/catalina.sh
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw-r--. 1 185 root 826 Oct  3 17:18 /opt/jws-5.6/tomcat/bin/launch/catalina.sh>
+Applicability Check expected Result:<0>
+Audit cmd: grep 'org.apache.catalina.STRICT_SERVLET_COMPLIANCE=true' $JWS_HOME/bin/launch/catalina.sh
+Audit Check RC: 0
+Audit Check Output:<    SAFR_OPTS_APPEND="-Dorg.apache.catalina.STRICT_SERVLET_COMPLIANCE=true -Dorg.apache.catalina.connector.RECYCLE_FACADES=true -Dorg.apache.catalina.connector.CoyoteAdapter.ALLOW_BACKSLASH=false -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=false">
+Audit Check expected Result:<0>
+Control: 10.6 - Audit PASS
+===================================================================================
+= Control ID: 10.7
+= Control  Level: 1
+= Description: Turn off session facade recycling (Manual)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/bin/launch/catalina.sh
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw-r--. 1 185 root 826 Oct  3 17:18 /opt/jws-5.6/tomcat/bin/launch/catalina.sh>
+Applicability Check expected Result:<0>
+Audit cmd: grep 'org.apache.catalina.connector.RECYCLE_FACADES=true' $JWS_HOME/bin/launch/catalina.sh
+Audit Check RC: 0
+Audit Check Output:<    SAFR_OPTS_APPEND="-Dorg.apache.catalina.STRICT_SERVLET_COMPLIANCE=true -Dorg.apache.catalina.connector.RECYCLE_FACADES=true -Dorg.apache.catalina.connector.CoyoteAdapter.ALLOW_BACKSLASH=false -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=false">
+Audit Check expected Result:<0>
+Control: 10.7 - Audit PASS
+===================================================================================
+= Control ID: 10.8
+= Control  Level: 2
+= Description: Do not allow additional path delimiters (Manual)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/bin/launch/catalina.sh
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw-r--. 1 185 root 826 Oct  3 17:18 /opt/jws-5.6/tomcat/bin/launch/catalina.sh>
+Applicability Check expected Result:<0>
+Audit cmd: grep 'org.apache.catalina.connector.CoyoteAdapter.ALLOW_BACKSLASH=false' $JWS_HOME/bin/launch/catalina.sh
+Audit Check RC: 0
+Audit Check Output:<    SAFR_OPTS_APPEND="-Dorg.apache.catalina.STRICT_SERVLET_COMPLIANCE=true -Dorg.apache.catalina.connector.RECYCLE_FACADES=true -Dorg.apache.catalina.connector.CoyoteAdapter.ALLOW_BACKSLASH=false -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=false">
+Audit Check expected Result:<0>
+Applicability Check CMD: ls -l $JWS_HOME/bin/launch/catalina.sh
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw-r--. 1 185 root 826 Oct  3 17:18 /opt/jws-5.6/tomcat/bin/launch/catalina.sh>
+Applicability Check expected Result:<0>
+Audit cmd: grep 'org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=false' $JWS_HOME/bin/launch/catalina.sh
+Audit Check RC: 0
+Audit Check Output:<    SAFR_OPTS_APPEND="-Dorg.apache.catalina.STRICT_SERVLET_COMPLIANCE=true -Dorg.apache.catalina.connector.RECYCLE_FACADES=true -Dorg.apache.catalina.connector.CoyoteAdapter.ALLOW_BACKSLASH=false -Dorg.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=false">
+Audit Check expected Result:<0>
+Control: 10.8 - Audit PASS
+===================================================================================
+= Control ID: 10.9
+= Control  Level: 2
+= Description: Configure connectionTimeout (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep -A3 ' <Connector port=' $JWS_HOME/conf/server.xml | grep 'connectionTimeout'
+Audit Check RC: 0
+Audit Check Output:<               connectionTimeout="20000" maxHttpHeaderSize="8192">
+Audit Check expected Result:<0>
+Control: 10.9 - Audit PASS
+===================================================================================
+= Control ID: 10.10
+= Control  Level: 2
+= Description: Configure maxHttpHeaderSize (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep -A3 ' <Connector port=' $JWS_HOME/conf/server.xml | grep 'maxHttpHeaderSize' | grep '8192'
+Audit Check RC: 0
+Audit Check Output:<               connectionTimeout="20000" maxHttpHeaderSize="8192">
+Audit Check expected Result:<0>
+Control: 10.10 - Audit PASS
+Skipping control: 10.11 in ignore list.
+===================================================================================
+= Control ID: 10.12
+= Control  Level: 1
+= Description: Do not allow symbolic linking (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/context.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 1665 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/context.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep 'allowLinking="true"' $JWS_HOME/conf/context.xml
+Audit Check RC: 1
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Applicability Check CMD: find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l
+Applicability Check RC: 0
+Applicability Check Output:<0>
+Applicability Check expected Result:<!0>
+Warning: Applicability Check Failed for STDOUT.
+Audit Applicability Check Failed. Audit: 2 Control: 10.12 is not applicable to this environment.
+Control: 10.12 - Audit PASS
+===================================================================================
+= Control ID: 10.13
+= Control  Level: 1
+= Description: Do not run applications as privileged (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/context.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 1665 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/context.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep 'privileged="true"' $JWS_HOME/conf/context.xml
+Audit Check RC: 1
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Applicability Check CMD: find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l
+Applicability Check RC: 0
+Applicability Check Output:<0>
+Applicability Check expected Result:<!0>
+Warning: Applicability Check Failed for STDOUT.
+Audit Applicability Check Failed. Audit: 2 Control: 10.13 is not applicable to this environment.
+Control: 10.13 - Audit PASS
+===================================================================================
+= Control ID: 10.14
+= Control  Level: 1
+= Description: Do not allow cross context requests (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/context.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 1665 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/context.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep 'crossContext="true"' $JWS_HOME/conf/context.xml
+Audit Check RC: 1
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Applicability Check CMD: find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l
+Applicability Check RC: 0
+Applicability Check Output:<0>
+Applicability Check expected Result:<!0>
+Warning: Applicability Check Failed for STDOUT.
+Audit Applicability Check Failed. Audit: 2 Control: 10.14 is not applicable to this environment.
+Control: 10.14 - Audit PASS
+===================================================================================
+= Control ID: 10.15
+= Control  Level: 1
+= Description: Do not resolve hosts on logging valves (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep 'enableLookups="true"' $JWS_HOME/conf/server.xml
+Audit Check RC: 1
+Audit Check Output:<>
+Audit Check expected Result:<!0>
+Control: 10.15 - Audit PASS
+===================================================================================
+= Control ID: 10.16
+= Control  Level: 1
+= Description: Enable memory leak listener (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep -E '^.*<Listen' $JWS_HOME/conf/server.xml | grep 'org.apache.catalina.core.JreMemoryLeakPreventionListener'
+Audit Check RC: 0
+Audit Check Output:<  <Listener className="org.apache.catalina.core.JreMemoryLeakPreventionListener" />>
+Audit Check expected Result:<0>
+Control: 10.16 - Audit PASS
+===================================================================================
+= Control ID: 10.17
+= Control  Level: 1
+= Description: Setting Security Lifecycle Listener (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: ls -l $JWS_HOME/conf/server.xml
+Applicability Check RC: 0
+Applicability Check Output:<-rw-rw----. 1 jboss root 6703 Oct  3 17:20 /opt/jws-5.6/tomcat/conf/server.xml>
+Applicability Check expected Result:<0>
+Audit cmd: grep -E '^.*<Listen' $JWS_HOME/conf/server.xml | grep 'org.apache.catalina.security.SecurityListener'
+Audit Check RC: 0
+Audit Check Output:<  <Listener className="org.apache.catalina.security.SecurityListener" />>
+Audit Check expected Result:<0>
+Control: 10.17 - Audit PASS
+===================================================================================
+= Control ID: 10.18
+= Control  Level: 1
+= Description: Use the logEffectiveWebXml and metadata-complete settings for deploying applications in production (Automated)
+===================================================================================
+Performing Audit ...
+Applicability Check CMD: find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l
+Applicability Check RC: 0
+Applicability Check Output:<0>
+Applicability Check expected Result:<!0>
+Warning: Applicability Check Failed for STDOUT.
+Audit Applicability Check Failed. Audit: 1 Control: 10.18 is not applicable to this environment.
+Applicability Check CMD: find $JWS_HOME/webapps/ -maxdepth 1 -type d | tail -n +2 | wc -l
+Applicability Check RC: 0
+Applicability Check Output:<0>
+Applicability Check expected Result:<!0>
+Warning: Applicability Check Failed for STDOUT.
+Audit Applicability Check Failed. Audit: 2 Control: 10.18 is not applicable to this environment.
+Control: 10.18 - Audit Not Applicable
+Skipping control: 10.19 in ignore list.
+===================================================================================
+= Audit Report
+===================================================================================
+Controls Not Applicable:  9
+2.5
+4.2
+7.1
+7.3
+7.4
+7.5
+10.3
+10.4
+10.18
+Controls Passed:  44
+1.1
+1.2
+2.1
+2.2
+2.3
+2.4
+2.6
+2.7
+3.1
+3.2
+4.1
+4.3
+4.4
+4.5
+4.6
+4.7
+4.8
+4.9
+4.10
+4.11
+4.12
+4.13
+4.14
+4.15
+5.2
+6.2
+6.3
+6.4
+7.2
+8.1
+9.2
+10.1
+10.5
+10.6
+10.7
+10.8
+10.9
+10.10
+10.12
+10.13
+10.14
+10.15
+10.16
+10.17
+Controls Failed:  0
+
