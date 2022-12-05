@@ -1,0 +1,88 @@
+{
+  "benchmark": {
+    "type": "cis",
+    "upstream_source": "CIS_Apache_Tomcat_9_Benchmark_v1.1.0.pdf",
+    "controls": [
+      {
+        "id": "1.1",
+        "level": "2",
+        "description": "Remove extraneous files and directories",
+        "audits": [
+          {
+            "applicable_checks": [],
+            "cmd": "ls -l ${wlp.user.dir}/extension",
+            "result": "!0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "ls -l ${wlp.user.dir}/shared",
+            "result": "!0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "ls -l ${wlp.user.dir}/server",
+            "result": "!0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [],
+            "cmd": "ls -l ${wlp.user.dir}/client",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l ${wlp.user.dir}/extension",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "rm -rf ${wlp.user.dir}/extension",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l ${wlp.user.dir}/shared",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "rm -rf ${wlp.user.dir}/shared",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l ${wlp.user.dir}/server",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "rm -rf ${wlp.user.dir}/server",
+            "result": "0",
+            "result_type": "rc"
+          },
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l ${wlp.user.dir}/client",
+                "result": "0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "rm -rf ${wlp.user.dir}/client",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      }]
+    }
+  }
