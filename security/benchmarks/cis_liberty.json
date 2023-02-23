@@ -5,7 +5,33 @@
     "controls": [
       {
         "id": "1.1",
-        "level": "2",
+        "level": "1",
+        "description": "Ensure root does not have ownership of Websphere Liberty binaries (Manual)",
+        "audits": [
+          {
+            "applicable_checks": [],
+            "cmd": "ls -l -R ${wlp.install.dir} | awk '{print $3, $4}'",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l -R ${wlp.install.dir} | awk '{print $3, $4}'",
+                "result": "!0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "chown -R <non-root user>:<non-root group> ${wlp.install.dir}",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },{
+        "id": "1.2",
+        "level": "1",
         "description": "Remove extraneous files and directories",
         "audits": [
           {
@@ -83,6 +109,225 @@
             "result_type": "rc"
           }
         ]
-      }]
+      },{
+        "id": "1.3",
+        "level": "1",
+        "description": "Ensure only defined users have access to the file system (Manual)",
+        "audits": [
+          {
+            "applicable_checks": [],
+            "cmd": "ls -l -R ${wlp.install.dir} | awk '{print substr($1,length($1)-3,3)}'",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l -R ${wlp.install.dir} | awk '{print substr($1,length($1)-3,3)}'",
+                "result": "!0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "chmod -R o-rwx ${wlp.install.dir}",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },{
+        "id": "1.5",
+        "level": "1",
+        "description": "Ensure Websphere Liberty Server Output is not set to the default value (Manual)",
+        "audits": [
+          {
+            "applicable_checks": [],
+            "cmd": "ls -l $WLP_OUTPUT_DIR | awk '{print $1, $3}'",
+            "result": "!0",
+            "result_type": "rc"
+          },{
+            "applicable_checks": [],
+            "cmd": "ls -l ${server.config.dir} | awk '{print $1, $3}'",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations":
+          {
+            "applicable_checks": [
+              {
+                "cmd": "ls -l $WLP_OUTPUT_DIR | awk '{print $1, $3}'",
+                "result": "!0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "",
+            "result": "0",
+            "result_type": "rc"
+          },{
+            "applicable_checks": [
+              {
+                "cmd": "ls -l ${server.config.dir} | awk '{print $1, $3}'",
+                "result": "!0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "",
+            "result": "0",
+            "result_type": "rc"
+          }
+        }
+      },{
+        "id": "1.6",
+        "level": "1",
+        "description": "Ensure automated configuration updates are disabled (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [],
+            "cmd": "grep -w -R -i 'updateTrigger' ${server.config.dir}",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "grep -w -R -i 'updateTrigger' ${server.config.dir}",
+                "result": "!0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },{
+        "id": "1.7",
+        "level": "1",
+        "description": "Ensure the WebSphere Liberty Installation is Validated (Manual)",
+        "audits": [
+          {
+            "applicable_checks": [],
+            "cmd": "${wlp_install_dir}/bin/productInfo validate",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],[
+          {
+            "applicable_checks": [],
+            "cmd": "${wlp_install_dir}/bin/productInfo version",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "${wlp_install_dir}/bin/productInfo validate",
+                "result": "!0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": ,
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],
+            "applicable_checks": [
+              {
+                "cmd": "${wlp_install_dir}/bin/productInfo version",
+                "result": "!0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": ,
+            "result": "0",
+            "result_type": "rc"
+      },{
+        "id": "1.8",
+        "level": "1",
+        "description": "Ensure Websphere Liberty file system access is Restricted (Manual)",
+        "audits": [
+          {
+            "applicable_checks": [],
+            "cmd": "ls -l -R ${wlp.install.dir} | awk '{print $1}'",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "chmod –R 750 ${wlp.install.dir}",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      },{
+        "id": "1.9",
+        "level": "1",
+        "description": "Ensure that the 'onConflict attribute' is set to 'IGNORE' to restrict config file overwrites (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [],
+            "cmd": "grep -w -R -i 'include location' ${server.config.dir}",
+            "result": "!0",
+            "result_type": "rc"
+          },
+        ],[
+          {
+            "applicable_checks": [],
+            "cmd": "ls -al <includedFileName.xml>",
+            "result": "!0",
+            "result_type": "rc"
+          },
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [],
+            "cmd": "grep -w -R -i 'include location' ${server.config.dir}",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ],[
+          {
+            "applicable_checks": [],
+            "cmd": "ls -al <includedFileName.xml>",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      }
+      {
+        "id": "2.1",
+        "level": "1",
+        "description": "Ensure 'displayAuthenticationRealm' is set to 'false' (Automated)",
+        "audits": [
+          {
+            "applicable_checks": [],
+            "cmd": "grep -w -R -i 'displayAuthenticationRealm' ${server.config.dir}",
+            "result": "!0",
+            "result_type": "rc"
+          }
+        ],
+        "remediations": [
+          {
+            "applicable_checks": [
+              {
+                "cmd": "grep -w -R -i 'displayAuthenticationRealm' ${server.config.dir}",
+                "result": "!0",
+                "result_type": "rc"
+              }
+            ],
+            "cmd": "<webAppSecurity ... displayAuthenticationRealm="false" />",
+            "result": "0",
+            "result_type": "rc"
+          }
+        ]
+      }
+    ]
     }
   }
